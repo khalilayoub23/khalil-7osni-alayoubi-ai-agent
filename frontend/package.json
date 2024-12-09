@@ -1,0 +1,9 @@
+
+{
+  "name": "elias-frontend",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "parcel index.html --port 1234"
+  },
+  "dependencies": {}
+}
