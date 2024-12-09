@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elias System</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Welcome to Elias System</h1>
+    <form id="dataForm">
+        <label for="inputData">Enter Data:</label>
+        <input type="text" id="inputData" name="inputData" required>
+        <button type="submit">Send</button>
+    </form>
+    <div id="response"></div>
+    <script>
+        document.getElementById("dataForm").onsubmit = async function(event) {
+            event.preventDefault();
+            const inputData = document.getElementById("inputData").value;
+            const response = await fetch("/api", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({input: inputData}),
+            });
+            const result = await response.json();
+            document.getElementById("response").innerText = JSON.stringify(result);
+        };
+    </script>
+</body>
+</html>
