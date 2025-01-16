@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(message)s', han
 class Khalil7osniAlayoubiSuperAgent:
     def __init__(self):
         self.agents = {}
-        self.model = pipeline("text-generation", model="microsoft/DialoGPT-medium")  # Load the DialoGPT model for conversational tasks
+        self.model = pipeline("text-generation", model="facebook/blenderbot-400M-distill")  # Load the BlenderBot model for text generation
         self.context = []  # Initialize context for conversation
         self.responses = {
             "hi": "Hello! How can I assist you today?",
@@ -96,11 +96,11 @@ if __name__ == "__main__":
     # רישום סוכנים
     agent1 = BaseAgent("Demand Forecaster")
     agent2 = BaseAgent("Supplier Finder")
-    khalil_7osni_al_ayoubi.register_agent(1, agent1)
+    khalil_7osni_alayoubi.register_agent(1, agent1)
     khalil_7osni_alayoubi.register_agent(2, agent2)
 
     # ניטור פעילות הסוכנים
-    khalil_7osni_al_ayoubi.monitor_agents()
+    khalil_7osni_alayoubi.monitor_agents()
 
     # העברת משימות לסוכנים
     khalil_7osni_alayoubi.delegate_task(1, "Forecast next month's demand")
