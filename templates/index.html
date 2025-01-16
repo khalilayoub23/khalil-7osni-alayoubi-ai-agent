@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat with Agent</title>
+    <link rel="icon" href="data:image/x-icon;,"> <!-- Simple favicon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@openui5/sap.ui.core/themes/sap_belize_plus/library.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@openui5/sap.ui.core/sap.ui.core.js"></script>
 </head>
 <body>
     <h1>Chat with Your Agent</h1>
@@ -15,7 +15,6 @@
     </div>
     <input type="text" id="user-input" class="openui-input" placeholder="Type your message here...">
     <button id="send-button" class="openui-button">Send</button>
-
 
     <script>
         $(document).ready(function() {
@@ -29,8 +28,6 @@
                 });
             });
         });
-        // Initialize OpenUI components
-        OpenUI.init();
     </script>
 </body>
 </html>
