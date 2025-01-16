@@ -1,32 +1,36 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elias System</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <title>Chat with Agent</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/openui/dist/openui.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/openui/dist/openui.min.js"></script>
 </head>
 <body>
-    <h1>Welcome to Elias System</h1>
-    <form id="dataForm">
-        <label for="inputData">Enter Data:</label>
-        <input type="text" id="inputData" name="inputData" required>
-        <button type="submit">Send</button>
-    </form>
-    <div id="response"></div>
+    <h1>Chat with Your Agent</h1>
+    <div id="chat-box" class="openui-box">
+        <div id="responses"></div>
+    </div>
+    <input type="text" id="user-input" class="openui-input" placeholder="Type your message here...">
+    <button id="send-button" class="openui-button">Send</button>
+
+
     <script>
-        document.getElementById("dataForm").onsubmit = async function(event) {
-            event.preventDefault();
-            const inputData = document.getElementById("inputData").value;
-            const response = await fetch("/api", {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({input: inputData}),
+        $(document).ready(function() {
+            $('#send-button').click(function() {
+                var userInput = $('#user-input').val();
+                $('#responses').append('<div>You: ' + userInput + '</div>');
+                $.post('/chat', { user_input: userInput }, function(data) {
+                    $('#responses').append('<div>Agent: ' + data.response + '</div>');
+                    $('#user-input').val('');
+                    $('#chat-box').scrollTop($('#chat-box')[0].scrollHeight);
+                });
             });
-            const result = await response.json();
-            document.getElementById("response").innerText = JSON.stringify(result);
-        };
+        });
+        // Initialize OpenUI components
+        OpenUI.init();
     </script>
 </body>
 </html>

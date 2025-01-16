@@ -3,12 +3,21 @@ import logging
 from transformers import pipeline
 
 # === הגדרות בסיסיות ===
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(message)s')
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(message)s', handlers=[logging.StreamHandler()])
 
 class Khalil7osniAlayoubiSuperAgent:
     def __init__(self):
         self.agents = {}
         self.model = pipeline("fill-mask")  # Load the BERT model for masked language modeling
+        self.responses = {
+            "hi": "Hello! How can I assist you today?",
+            "hiii": "Hi there! What can I do for you?",
+            "hello": "Greetings! How may I help you?",
+            "bye": "Goodbye! Have a great day!",
+            "exit": "Exiting chat. Goodbye!",
+            "how are you?": "I'm just a program, but thanks for asking!",
+            "what's your name?": "I'm Khalil's assistant, here to help you!"
+        }
 
     def register_agent(self, agent_id, agent_object):
         """רישום סוכן חדש"""
@@ -26,11 +35,16 @@ class Khalil7osniAlayoubiSuperAgent:
         logging.info(f"Delegating task to Agent {agent_id}...")  # Ensure task delegation is logged
         """העברת משימה לסוכן מסוים"""
         if agent_id in self.agents:
+            if task.lower() in self.responses:
+                return self.responses[task.lower()]  # Return predefined response
+            if task.lower() in self.responses:
+                return self.responses[task.lower()]  # Return predefined response
             result = self.agents[agent_id].execute_task(task)
             logging.info(f"Task delegated to Agent {agent_id}. Result: {result}")
             # Example of using the BERT model for a task
-            result = self.model(f"{task} [MASK]")  # Using the model to predict
+            result = self.model(f"{task} <mask>")  # Using the model to predict with a mask token
             logging.info(f"Task prediction result: {result}")
+            return result
         else:
             logging.warning(f"Agent {agent_id} not found.")
 
@@ -72,3 +86,12 @@ if __name__ == "__main__":
 
     # ניטור נוסף לאחר המשימות
     threading.Timer(3.0, khalil_7osni_al_ayoubi.monitor_agents).start()
+
+    # Chat functionality
+    print("Chat with your agent! Type 'exit' to end the chat.")
+    while True:
+        user_input = input("You: ")
+        if user_input.lower() == 'exit':
+            break
+        response = khalil_7osni_al_ayoubi.delegate_task(1, user_input)  # Delegate the user input as a task
+        print(f"Agent: {response}")
