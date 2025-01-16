@@ -1,5 +1,5 @@
 import pytest
-from alias_super_agent import Khalil7osniAlayoubiSuperAgent, BaseAgent
+from khalil_7osni_alayoubi_super_agent import Khalil7osniAlayoubiSuperAgent, BaseAgent
 
 def test_agent_registration():
     alias = Khalil7osniAlayoubiSuperAgent()
