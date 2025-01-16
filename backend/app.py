@@ -7,7 +7,10 @@ CORS(app)
 
 @app.route("/")
 def home():
-    return jsonify({"message": "Elias Backend is running!"})
+    try:
+        return jsonify({"message": "Elias Backend is running!"})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5000, debug=True)

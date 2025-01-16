@@ -4,13 +4,19 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    try:
+        return render_template("index.html")
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route("/api", methods=["POST"])
 def api():
-    data = request.json
-    response = {"message": "Elias API received your data!", "data": data}
-    return jsonify(response)
+    try:
+        data = request.json
+        response = {"message": "Elias API received your data!", "data": data}
+        return jsonify(response)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
 
 if __name__ == "__main__":
     app.run(debug=True)
