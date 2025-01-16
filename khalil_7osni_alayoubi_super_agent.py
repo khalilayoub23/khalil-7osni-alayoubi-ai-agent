@@ -41,12 +41,13 @@ class Khalil7osniAlayoubiSuperAgent:
             self.context.append(task)  # Add user input to context
             if task.lower() in self.responses:
                 return self.responses[task.lower()]  # Return predefined response
-            context_str = " ".join(self.context)  # Create context string
-            result = self.model(context_str)  # Use the model with context
+            context_str = " ".join(self.context[-5:])  # Use the last 5 messages for context
+            result = self.model(context_str, max_length=50, num_return_sequences=1)  # Use the model with context
             logging.info(f"Task prediction result: {result}")
             return result[0]['generated_text']  # Return the generated text
         else:
             logging.warning(f"Agent {agent_id} not found.")
+            return "Agent not found."  # Return a message if the agent is not found
 
     def recognize_image(self, image_path):
         """Recognize objects in an image using OpenCV."""

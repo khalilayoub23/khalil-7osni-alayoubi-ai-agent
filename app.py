@@ -4,19 +4,15 @@ from khalil_7osni_alayoubi_super_agent import Khalil7osniAlayoubiSuperAgent, Bas
 app = Flask(__name__)
 khalil_7osni_alayoubi = Khalil7osniAlayoubiSuperAgent()
 
-# Register agents
-agent1 = BaseAgent("Demand Forecaster")
-agent2 = BaseAgent("Supplier Finder")
-khalil_7osni_alayoubi.register_agent(1, agent1)
-khalil_7osni_alayoubi.register_agent(2, agent2)
-
-@app.route('/')
+@app.route("/")
 def home():
     return render_template('index.html')
 
-@app.route('/chat', methods=['POST'])
+@app.route("/chat", methods=['POST'])
 def chat():
-    user_input = request.form['user_input']
+    user_input = request.form.get('message')  # Use get to avoid KeyError
+    if user_input is None:
+        return jsonify({'response': 'No input provided'}), 400  # Handle missing input
     response = khalil_7osni_alayoubi.delegate_task(1, user_input)
     return jsonify({'response': response})
 
